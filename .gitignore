@@ -1,0 +1,6 @@
+__pycache__/
+data/videos
+data/jsons
+.vscode/
+dataset/videos
+dataset/jsons
