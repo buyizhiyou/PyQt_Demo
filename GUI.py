@@ -2,7 +2,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QBrush, QColor, QPalette, QPixmap
 
-from custom_widget import myVideoSlider, myVideoWidget
+from custom_widget import myVideoSlider, myVideoWidget,DoubleSlider
 
 
 class Ui_MainWindow(object):
@@ -163,9 +163,10 @@ class Ui_MainWindow(object):
 
         #video slider
         self.sld_video = myVideoSlider(self.centralwidget)
+        # self.sld_video = DoubleSlider(self.centralwidget)
         self.sld_video.setMinimumSize(QtCore.QSize(410, 0))
         self.sld_video.setMaximumSize(QtCore.QSize(16777215, 20))
-        self.sld_video.setMaximum(100)
+        self.sld_video.setMaximum(100000)
         self.sld_video.setOrientation(QtCore.Qt.Horizontal)
         self.sld_video.setObjectName("sld_video")
         self.verticalLayout_2.addWidget(self.sld_video)

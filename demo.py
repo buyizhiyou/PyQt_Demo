@@ -80,31 +80,32 @@ class myMainWindow(Ui_MainWindow, QMainWindow):
 
     def clickedSlider(self, position):
         '''
-        点击slider控制视频进度
+        点击slider控制视频进度，这个position是指slider位置
         '''
-        self.logger.debug("click,location:%d,duration:%d" %
+        self.logger.info("click,location:%d,duration:%d" %
                           (self.location, self.player.duration()))
         if self.player.duration() > 0:  # 开始播放后才允许进行跳转
-            video_position = int((position / 100) * self.player.duration())
+            video_position = int((position / 100000) * self.player.duration())
             self.player.setPosition(video_position)
             self.lab_video.setText("%.1fs" % (
-                (position/1000)))
+                (video_position/1000)))
         else:
             self.sld_video.setValue(0)
 
     def moveSlider(self, position):
         '''
-        滑动slider调节视频进度
+        滑动slider调节视频进度,这个position是指slider位置
         '''
-        self.logger.warning("move,location:%d,duration:%d" %
+        self.logger.info("move,location:%d,duration:%d" %
                             (self.location, self.player.duration()))
         self.sld_video_pressed = True
         self.location = position
+        self.logger.info("move location:%f",position)
         if self.player.duration() > 0:  # 开始播放后才允许进行跳转
-            video_position = int((position / 100) * self.player.duration())
+            video_position = int((position / 100000) * self.player.duration())
             self.player.setPosition(video_position)
             self.lab_video.setText("%.1fs" % (
-                (position/1000)))
+                (video_position/1000)))
 
     def pressSlider(self):
         self.sld_video_pressed = True
@@ -112,18 +113,18 @@ class myMainWindow(Ui_MainWindow, QMainWindow):
     def releaseSlider(self):
         self.sld_video_pressed = False
 
-    def changeSlide(self, position):
+    def changeSlide(self, vposition):
         '''
-        视频播放
+        视频播放,这个vposition是指视频时间ms
         '''
-        self.location = position
+        self.location = vposition
         self.logger.info("change,location:%d,duration:%d" %
                          (self.location, self.player.duration()))
         if not self.sld_video_pressed:  # 进度条被鼠标点击时不更新
             self.sld_video.setValue(
-                round((position/(self.player.duration()+0.1))*100))
+                round((vposition/(self.player.duration()+0.1))*100000))
             self.lab_video.setText("%.1fs" % (
-                (position/1000)))
+                (vposition/1000)))
 
     def openVideoFile(self):
         '''
@@ -236,15 +237,19 @@ class myMainWindow(Ui_MainWindow, QMainWindow):
         type=1:记录整段视频结束时间点
         type=2:记录前半段视频结束时间点
         '''
-        if type == 0:
-            if(self.play == False):  # 必须是视频暂停状态下才能记录
+        if(self.play == False):## 必须是视频暂停状态下才能记录
+            if type == 0:
                 self.txt_start.setText("%d" % self.location)
-        elif type == 1:
-            if(self.play == False):  # 必须是视频暂停状态下才能记录
+            elif type == 1:
                 self.txt_end.setText("%d" % self.location)
-        elif type == 2:
-            if(self.play == False):  # 必须是视频暂停状态下才能记录
+            elif type == 2:
                 self.txt_mid.setText("%d" % self.location)
+        else:
+            choice = QMessageBox.warning(
+                self, "Warning", "在记录时间点时需要先暂停视频!", QMessageBox.Yes | QMessageBox.No)
+            self.logger.warning("在记录时间点时需要先暂停视频!")
+            return
+
 
 
 if __name__ == '__main__':
