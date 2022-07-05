@@ -59,8 +59,8 @@ class Ui_MainWindow(object):
         self.txt_name.setPlaceholderText("Your name")
         self.comboBox = QtWidgets.QComboBox(self.centralwidget)
         self.comboBox.setObjectName("comboBox")
-        items = ["People&Blogs", "Gaming", "Sports", "Movie", "Travel", "TvShows", "Education", "Animals&Pets",
-                 "Science&Technology", "Family", "Food&Drink", "Vehicles&Autos", "Advertisement", "Documentary"]
+        items = ["people&blogs", "gaming", "sports", "movie", "travel", "tv shows", "education", "animals&pets",
+                 "science&technology", "family", "food&drink", "vehicles&Autos", "advertisement", "documentary"]
         self.comboBox.addItems(items)
         self.verticalLayout_1.addWidget(self.comboBox)
         self.txt_start = QtWidgets.QLineEdit(self.centralwidget)

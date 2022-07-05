@@ -2,11 +2,11 @@
 
 1. 从youtube下载视频:  
     [download website](https://en.savefrom.net/)   
-    手动创建data/videos文件夹或者执行下面命令 
+    在Label文件夹下，手动创建data/videos文件夹或者执行下面命令 
     ```
     mkdir -p data/videos
     ```
-    例如下载https://www.youtube.com/watch?v=Hrj60-7EQnY ,文件名保存为Hrj60-7EQnY.mp4,保存到data/videos目录下  
+    例如下载https://www.youtube.com/watch?v=Hrj60-7EQnY ,**取url的v=后面字段，文件名保存为Hrj60-7EQnY.mp4**,保存到data/videos目录下  
 
 
 

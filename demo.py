@@ -208,8 +208,9 @@ class myMainWindow(Ui_MainWindow, QMainWindow):
         now = datetime.datetime.now()
         time = now.strftime("%Y-%m-%d-%H-%M-%S")
         url = "https://www.youtube.com/watch?v="+self.filename
-        results = {"author": author_name, "url": url, "filename": self.filename, "time": time, "content": {"category": category, "start": start, "end": end, "mid": mid, "caption_en": caption_en, "caption_ch": caption_ch, "prompt_en": prompt_en,
-                                                                                                           "prompt_ch": prompt_ch, "gt_en": gt_en, "gt_ch": gt_ch}}
+        results = {"author": author_name, "url": url, "filename": self.filename, "time": time, "content": 
+                            {"category": category, "start": start, "end": end, "mid": mid, "caption_en": caption_en, "caption_ch": 
+                            caption_ch, "prompt_en": prompt_en,"prompt_ch": prompt_ch, "gt_en": gt_en, "gt_ch": gt_ch}}
         self.logger.info(results)
 
         js = json.dumps(results, ensure_ascii=False)
@@ -237,13 +238,14 @@ class myMainWindow(Ui_MainWindow, QMainWindow):
         type=1:记录整段视频结束时间点
         type=2:记录前半段视频结束时间点
         '''
+        time = self.location/1000#ms 转 s
         if(self.play == False):## 必须是视频暂停状态下才能记录
             if type == 0:
-                self.txt_start.setText("%d" % self.location)
+                self.txt_start.setText("%.1f" % time)
             elif type == 1:
-                self.txt_end.setText("%d" % self.location)
+                self.txt_end.setText("%.1f" % time)
             elif type == 2:
-                self.txt_mid.setText("%d" % self.location)
+                self.txt_mid.setText("%.1f" % time)
         else:
             choice = QMessageBox.warning(
                 self, "Warning", "在记录时间点时需要先暂停视频!", QMessageBox.Yes | QMessageBox.No)

@@ -23,13 +23,12 @@ DEST_DIR_JSON="dataset/jsons"
 
 # TODO
 def cut(json_file):
-    time.sleep(1)
     with open(os.path.join(SOURCE_DIR_JSON,json_file),"r") as f:
         results=json.load(f)
     videoname=results['filename']
-    start=float(results['content']['start'])#ms
-    end=float(results['content']['end'])#ms
-    mid=float(results['content']['mid'])#ms
+    start=float(results['content']['start'])*1000#s->ms
+    end=float(results['content']['end'])*1000#s->ms
+    mid=float(results['content']['mid'])*1000#s->ms
     
     tstart = ms_to_time(start)
     dur_long = ms_to_time(end-start)
@@ -58,8 +57,8 @@ if __name__ == "__main__":
     files = os.listdir(SOURCE_DIR_JSON)
     pool = multiprocessing.Pool(processes=8)
     for f in files:
-        cut(f)
-        # pool.apply_async(cut, (f,))
+        # cut(f)
+        pool.apply_async(cut, (f,))
     pool.close()
     pool.join()
     print("End")
